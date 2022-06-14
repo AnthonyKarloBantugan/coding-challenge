@@ -1,5 +1,5 @@
 // Data and images are from [randomuser.me](https://randomuser.me/)
-export const USERS = [
+const USERS = [
 	{
 		id: "5",
 		name: {
