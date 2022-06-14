@@ -53,6 +53,10 @@ function displayDetails(data) {
 	const tableBody = document.getElementById("table-body");
 
 	USERS.forEach((user) => {
+		if (user.phone.length > 14) {
+			user.phone = "Invalid Number";
+		}
+
 		const tableRow = document.createElement("tr"); //creates "tr" element
 
 		tableBody.appendChild(tableRow); // adds "tableRow" inside "tableBody"
@@ -61,7 +65,7 @@ function displayDetails(data) {
 		tableRow.innerHTML = `
 	    <td class="d-inline-block text-truncate" style="max-width: 150px;">${user.name.title}. ${user.name.last} ${user.name.first}</td>
 	    <td>${user.email}</td>
-	    <td>1234</td>
+	    <td>${user.phone}</td>
 	    <td><img src="${user.pictureUrl}"></td>
 	    <td>${user.accountBalance}</td>
 	    `;
