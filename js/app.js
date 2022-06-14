@@ -1,5 +1,4 @@
 // Your code should go here
-import { USERS } from "../json/data.js";
 let users = USERS;
 // Render contents on page laod
 document.addEventListener("DOMContentLoaded", () => displayDetails(users));
@@ -33,6 +32,9 @@ function displayDetails(data) {
 	const tableBody = document.getElementById("table-body");
 
 	data.forEach((user) => {
+		// this is not defined in requirements
+		// the problem is you have to sanitize the data
+		// reference: https://gomakethings.com/how-to-sanitize-third-party-content-with-vanilla-js-to-prevent-cross-site-scripting-xss-attacks/
 		if (user.phone.length > 14) {
 			user.phone = "Invalid Number";
 		}
@@ -42,6 +44,8 @@ function displayDetails(data) {
 		tableBody.appendChild(tableRow); // adds "tableRow" inside "tableBody"
 
 		// Creates HTML code "td" inside "tableRow" to display user details
+
+		// user title is not defined in requirement
 		tableRow.innerHTML = `
 	    <td class="d-inline-block text-truncate table-detail" style="max-width: 150px;">${user.name.title}. ${user.name.last} ${user.name.first}</td>
 	    <td class="table-detail">${user.email}</td>
