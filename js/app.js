@@ -54,6 +54,13 @@ function displayDetails(data) {
 
 function shuffle() {
 	const shuffledData = USERS.sort(() => Math.random() - 0.5);
+	const tb = document.getElementById("table-body");
+	const tr = document.querySelectorAll(".table-row");
+
+	// removes the created "tr" on load page
+	tr.forEach((row) => {
+		tb.removeChild(row);
+	});
 
 	displayDetails(shuffledData);
 }
