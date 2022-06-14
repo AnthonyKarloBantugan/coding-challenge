@@ -1,10 +1,11 @@
 // Your code should go here
 import { USERS } from "../json/data.js";
-
+let users = USERS;
 // Render contents on page laod
-document.addEventListener("DOMContentLoaded", displayDetails());
+document.addEventListener("DOMContentLoaded", () => displayDetails(users));
 
 // [Variables]
+
 const startRandomBtn = document.getElementById("start");
 const stopRandomBtn = document.getElementById("stop");
 const sortBtn = document.getElementById("sort");
@@ -29,51 +30,38 @@ sortBtn.addEventListener("click", () => sort());
 
 // [FUNCTIONS]
 function displayDetails(data) {
-	if (data !== null && data !== undefined) {
-		const tableBody = document.getElementById("table-body");
-		tableBody.innerHTML = ""; //removes on load created HTML codes from ".table-body"
-
-		// Creates a "tr" and corresponding "td" for each element in the data array
-		data.forEach((user) => {
-			const tableRow = document.createElement("tr"); //creates "tr" element
-
-			tableBody.appendChild(tableRow); // adds "tableRow" inside "tableBody"
-
-			// Creates HTML code "td" inside "tableRow" to display user details
-			tableRow.innerHTML = `
-        <td class="d-inline-block text-truncate" style="max-width: 150px;">${user.name.title}. ${user.name.last} ${user.name.first}</td>
-        <td>${user.email}</td>       
-        <td>1234</td>
-        <td><img src="${user.pictureUrl}"></td>
-        <td>${user.accountBalance}</td>       
-        `;
-		});
-	}
-
 	const tableBody = document.getElementById("table-body");
 
-	USERS.forEach((user) => {
+	data.forEach((user) => {
 		if (user.phone.length > 14) {
 			user.phone = "Invalid Number";
 		}
 
 		const tableRow = document.createElement("tr"); //creates "tr" element
-
+		tableRow.setAttribute("class", "table-row");
 		tableBody.appendChild(tableRow); // adds "tableRow" inside "tableBody"
 
 		// Creates HTML code "td" inside "tableRow" to display user details
 		tableRow.innerHTML = `
-	    <td class="d-inline-block text-truncate" style="max-width: 150px;">${user.name.title}. ${user.name.last} ${user.name.first}</td>
-	    <td>${user.email}</td>
-	    <td>${user.phone}</td>
-	    <td><img src="${user.pictureUrl}"></td>
-	    <td>${user.accountBalance}</td>
+	    <td class="d-inline-block text-truncate table-detail" style="max-width: 150px;">${user.name.title}. ${user.name.last} ${user.name.first}</td>
+	    <td class="table-detail">${user.email}</td>
+	    <td class="table-detail">${user.phone}</td>
+	    <td class="table-detail"><img src="${user.pictureUrl}"></td>
+	    <td class="table-detail">${user.accountBalance}</td>
 	    `;
 	});
 }
 
 function shuffle() {
 	const shuffledData = USERS.sort(() => Math.random() - 0.5);
+	const tb = document.getElementById("table-body");
+	const tr = document.querySelectorAll(".table-row");
+
+	// removes the created "tr" on load page
+	tr.forEach((row) => {
+		tb.removeChild(row);
+	});
+
 	displayDetails(shuffledData);
 }
 
@@ -82,5 +70,5 @@ function sort() {
 		return b.accountBalance - a.accountBalance;
 	});
 
-	displayDetails(sortedData);
+	displayDetails(sortedData, "sort");
 }
